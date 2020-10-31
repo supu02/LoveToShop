@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:love_to_shop/services/auth.dart';
 import 'package:love_to_shop/shared/constants.dart';
 
 class SignIn extends StatefulWidget {
@@ -7,6 +8,7 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +55,15 @@ class _SignInState extends State<SignIn> {
                       'Sign In',
                       style: TextStyle(color: Colors.white, fontSize: 17.0),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      dynamic result = _auth.signInAnon();
+                      if (result == null) {
+                        print('Error signing in');
+                      } else {
+                        print('Signed In');
+                        print(result);
+                      }
+                    },
                   )
                 ],
               ),

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:love_to_shop/models/user.dart';
+import 'package:love_to_shop/services/database.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -50,6 +51,11 @@ class AuthService {
       AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
+
+      // create new document for user with their uid
+
+      await DatabaseServices(uid: user.uid).updateUserData('new item', 1, 200);
+
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
